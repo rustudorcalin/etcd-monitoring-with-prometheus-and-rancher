@@ -1,3 +1,5 @@
+### Introduction
+
 This article is a follow up to [What Is Etcd and How Do You Set Up an Etcd Cluster](https://rancher.com/blog/2019/2019-01-29-what-is-etcd/). In this chapter we will be going directly to installing an Etcd cluster, followed up by configuring monitoring using Prometheus and Grafana, all with the help of Rancher.
 
 We will see how easy it is to accomplish this without the need of using all kind of dependencies, as we can take fully advantage of Rancher's Apps. We won't need:
@@ -27,7 +29,7 @@ As soon as our cluster is up and running, let's select the **Default** project c
 
 First app we will be installing is `etcd-operator`. Leave all the defaults it pre-populates and make sure you enable the etcd cluster creation too (for the simplicity of the demo we've unchecked the installation of `etcd Backup Operator` and `etcd Restore Operator`).
 
-The Operator's role is to observe analyse and act. It is using the Kubernetes API to observe the current cluster state. If there are any differences between the running state and the desired one it finds them and lastly fixes them.
+The Operator's role is to observe analyze and act. It is using the Kubernetes API to observe the current cluster state. If there are any differences between the running state and the desired one, it finds them and lastly fixes them.
 
 As an example, let's say that we are running an Etcd cluster with 3 members. If something happens and one member is down, the Operator observes this. It makes a diff against the desired state and because of the difference it acts to recover the one missing member. Now we have again a healthy cluster with no human intervention.
 
@@ -47,7 +49,7 @@ Let's connect to an etcd Pod in order to play with few basic etcdctl commands (m
 
 ### Configuring Prometheus and Grafana
 
-One of the best and easiest solutions to monitor Etcd cluster is using Prometheus And Grafana. While these were installed with just few clicks from Rancher's App they still need some proper configuration/integration. 
+One of the best and easiest solutions to monitor Etcd cluster is using Prometheus and Grafana. While these were installed with just few clicks from Rancher's App they still need some proper configuration/integration. 
 
 First let's figure out the access. We will create two services, so we can access the services externally. 
 For this we need to go Load Balancer tab an import two YAML files, one for each service. Hit Import YAML button and paste the configuration.
@@ -101,17 +103,17 @@ As soon as they become active, click on their vertical ellipsis (3 vertical dots
 
 Write them down, as we will jump from one window to another.
 
-Let's login into Grafana (use here the admin password used while installing the app). In the Home Dashboard page the first thing we need to do is to add a data source. Grafana has built-in Prometheus support, so we just need to add Promethus data source using the public IP we previously created for this.
+Let's login into Grafana (use here the admin password used while installing the app). In the Home Dashboard page the first thing we need to do is to add a data source. Grafana has built-in Prometheus support, so we just need to add Prometheus data source using the public IP we previously created for this.
 
 ![08](images/08-rancher-grafana-home.png)
 ![09](images/09-rancher-grafana-datasource.png)
 
-Then import the default etcd dashboard template, use the id `3070` for this. As it loads directly, the only thing which remains is to select Prometheues data source previously configured.
+Then import the default etcd dashboard template, use the id `3070` for this. As it loads directly, the only thing which remains is to select Prometheus data source previously configured.
 
 ![10](images/10-rancher-grafana-import-dashboard.png)
 ![11](images/11-rancher-grafana-import-dashboard1.png)
 
-Dashboard has been succesfully imported, we can see all sort of graphs, but there is no data display. Why?
+Dashboard has been successfully imported, we can see all sort of graphs, but there is no data display. Why?
 We have Prometheus running, we have Grafana integrated with it, problem is that we didn't tell Prometheus to scrape relevant targets related to our etcd cluster.
 
 Let's go back to Rancher and fix this. Under Resources tab, we can find the prometheus-server Config Map, we will need to edit this.
@@ -147,7 +149,7 @@ The error message is pretty clear, we have a bad config, which we need to fix. S
 
 ![14](images/14-rancher-prometheus-logs-ok.png)
 
-If you are not used to logs that much, you can check the same from Prometheus server. Access its external IP address and here you can see if the configuration reload was succesfull or not (below screenshot has the bad config loaded).
+If you are not used to logs that much, you can check the same from Prometheus server. Access its external IP address and here you can see if the configuration reload was successful or not (below screenshot has the bad config loaded).
 
 ![15](images/15-rancher-prometheus-ui.png)
 
@@ -156,3 +158,5 @@ Last thing to do is to check now Grafana and see that we have graphs with releva
 ![16](images/16-rancher-grafana-with-data.png)
 
 ### Conclusion
+
+To wrap up this demo, we saw how Rancher helps us installing Etcd (using etcd-operator), Prometheus and Grafana. All the integration is out of the box, there are only few bits needed to be added to get everything configured. Also we get from Rancher all the visibility needed, in terms of troubleshooting, if necessary.

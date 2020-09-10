@@ -63,7 +63,7 @@ Then import the default etcd dashboard template using the id `3070`. Hit load an
 
 ![](images/upload_7c79d76e364ad46cefca881548192269.png)
 
-![](images/upload_10f318e0fefcb69bcb9fc2b6ab10fb2e.png)
+![](images/upload_10f318e0fefcb69bcb9fc2b6ab10fb2eee.png)
 
 We've successfully imported the dashboard and we can see all sort of graphs, but there is no data display. Why? We have Prometheus running and Grafana is integrated with it. The problem is that we didn't tell Prometheus to scrape relevant targets related to our etcd cluster.
 

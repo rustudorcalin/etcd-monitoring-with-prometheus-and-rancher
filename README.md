@@ -1,6 +1,6 @@
 # Etcd Monitoring with Prometheus and Grafana 
 ### Introduction
-by Calin Rus
+
 This article is a follow up to [What Is Etcd and How Do You Set Up an Etcd Cluster](https://rancher.com/blog/2019/2019-01-29-what-is-etcd/). In this article, we will install an Etcd cluster and configure monitoring using Prometheus and Grafana, all with the help of Rancher.
 
 We will see how easy it is to accomplish this without the need of dependencies, as we can take full advantage of Rancher's App Catalog.
